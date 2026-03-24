@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Dog Breed Classifier - AI Powered Dog Breed Identification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .camera-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            max-width: 640px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            background: #f0f0f0;
+        }
+
+        video {
+            width: 100%;
+            background: #f0f0f0;
+            transform: scaleX(-1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #48bb78;
+            color: white;
+        }
+
+        .result-section {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-section h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .breed-name {
+            font-size: 2em;
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .confidence {
+            text-align: center;
+            color: #48bb78;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            padding: 10px;
+            background: #e6fffa;
+            border-radius: 10px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .detail-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .detail-card h3 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .detail-card p {
+            color: #2d3748;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #fed7e2 0%, #fbb6ce 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .fun-fact h3 {
+            color: #9b2c2c;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .breed-name {
+                font-size: 1.5em;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐕 Dog Breed Classifier</h1>
+            <p>Take a photo or upload an image to identify your dog's breed using AI</p>
+        </header>
+
+        <div class="main-content">
+            <div class="camera-section">
+                <div class="video-container">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button id="capture-btn" class="btn btn-primary">📸 Capture Photo</button>
+                    <label for="image-upload" class="btn btn-secondary">📁 Upload Image</label>
+                    <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+
+            <div class="result-section" id="result-section" style="display: none;">
+                <h2>🔍 Analysis Result</h2>
+                <div id="result-content"></div>
+            </div>
+
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing your dog's photo...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureBtn = document.getElementById('capture-btn');
+        const imageUpload = document.getElementById('image-upload');
+        const resultSection = document.getElementById('result-section');
+        const resultContent = document.getElementById('result-content');
+        const loading = document.getElementById('loading');
+
+        // Access user's camera
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error("Error accessing camera:", err);
+                alert("Unable to access camera. Please check permissions or use upload option.");
+            }
+        }
+
+        // Capture photo from video
+        function capturePhoto() {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Convert canvas to base64 image
+            const imageData = canvas.toDataURL('image/jpeg');
+            sendImageToServer(imageData);
+        }
+
+        // Handle file upload
+        imageUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    sendImageToServer(event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Send image to server for prediction
+        async function sendImageToServer(imageData) {
+            // Show loading spinner
+            loading.style.display = 'block';
+            resultSection.style.display = 'none';
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ image: imageData })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayResult(result);
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to analyze image. Please try again.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Display prediction result
+        function displayResult(result) {
+            resultContent.innerHTML = `
+                <div class="breed-name">
+                    🐕 ${result.breed}
+                </div>
+                <div class="confidence">
+                    Confidence: ${result.confidence}
+                </div>
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <h3>📍 Origin</h3>
+                        <p>${result.details.origin}</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>🎭 Temperament</h3>
+                        <p>${result.details.temperament}</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>⏱️ Life Span</h3>
+                        <p>${result.details.life_span}</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>📏 Height</h3>
+                        <p>${result.details.height}</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>⚖️ Weight</h3>
+                        <p>${result.details.weight}</p>
+                    </div>
+                </div>
+                <div class="detail-card">
+                    <h3>📝 Description</h3>
+                    <p>${result.details.description}</p>
+                </div>
+                <div class="fun-fact">
+                    <h3>✨ Fun Fact</h3>
+                    <p>${result.details.fun_fact}</p>
+                </div>
+            `;
+            
+            resultSection.style.display = 'block';
+            
+            // Scroll to result
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event listeners
+        captureBtn.addEventListener('click', capturePhoto);
+        
+        // Start camera when page loads
+        startCamera();
+    </script>
+</body>
+</html>

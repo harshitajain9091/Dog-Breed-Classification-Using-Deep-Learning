@@ -1,0 +1,62 @@
+{
+    "Labrador_Retriever": {
+        "name": "Labrador Retriever",
+        "origin": "Canada (Newfoundland)",
+        "temperament": "Friendly, Active, Outgoing, Gentle, Kind, Trusting",
+        "life_span": "10-12 years",
+        "height": "21.5-24.5 inches",
+        "weight": "55-80 lbs",
+        "description": "The Labrador Retriever is a medium-large breed of retriever-gun dog. They are known for their intelligence, good temperament, and love of water.",
+        "fun_fact": "Labradors have been the most popular dog breed in the United States for 30 consecutive years!"
+    },
+    "German_Shepherd": {
+        "name": "German Shepherd",
+        "origin": "Germany",
+        "temperament": "Intelligent, Loyal, Courageous, Confident, Watchful",
+        "life_span": "9-13 years",
+        "height": "22-26 inches",
+        "weight": "50-90 lbs",
+        "description": "German Shepherds are working dogs developed originally for herding sheep. They are highly intelligent and trainable.",
+        "fun_fact": "German Shepherds are the second most popular dog breed in the US and are commonly used as police and military dogs."
+    },
+    "Golden_Retriever": {
+        "name": "Golden Retriever",
+        "origin": "Scotland",
+        "temperament": "Intelligent, Friendly, Reliable, Trustworthy, Kind",
+        "life_span": "10-12 years",
+        "height": "21.5-24 inches",
+        "weight": "55-75 lbs",
+        "description": "Golden Retrievers are friendly, intelligent and devoted dogs. They are always eager to please and excel in obedience training.",
+        "fun_fact": "Golden Retrievers have a 'soft mouth' which allows them to carry eggs without breaking them!"
+    },
+    "Bulldog": {
+        "name": "Bulldog",
+        "origin": "England",
+        "temperament": "Docile, Willful, Friendly, Gregarious",
+        "life_span": "8-10 years",
+        "height": "14-15 inches",
+        "weight": "40-50 lbs",
+        "description": "Bulldogs are known for their loose, wrinkled skin and distinctive pushed-in nose. They are calm, courageous, and friendly.",
+        "fun_fact": "Bulldogs are known as the 'National Dog of England' and are mascots for many universities and sports teams."
+    },
+    "Poodle": {
+        "name": "Poodle",
+        "origin": "Germany/France",
+        "temperament": "Intelligent, Active, Alert, Trainable, Instinctual",
+        "life_span": "12-15 years",
+        "height": "10-24 inches (varies by size)",
+        "weight": "6-70 lbs (varies by size)",
+        "description": "Poodles are highly intelligent and trainable dogs. They come in three sizes: Standard, Miniature, and Toy.",
+        "fun_fact": "Despite their fancy appearance, Poodles were originally bred as water retrievers!"
+    },
+    "Rottweiler": {
+        "name": "Rottweiler",
+        "origin": "Germany",
+        "temperament": "Loyal, Protective, Confident, Alert, Fearless",
+        "life_span": "8-10 years",
+        "height": "22-27 inches",
+        "weight": "80-135 lbs",
+        "description": "Rottweilers are powerful, loyal dogs known for their strength and protective nature. They are excellent guard dogs and family companions.",
+        "fun_fact": "Rottweilers were originally used by the Romans to drive cattle and guard outposts!"
+    }
+}
